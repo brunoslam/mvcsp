@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoCSOM", "DemoCSOM\DemoCSOM.csproj", "{C23F33A2-669C-4955-8EB4-D292D514E24B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoCSOMWeb", "DemoCSOMWeb\DemoCSOMWeb.csproj", "{A9F8AC37-5596-4DD8-A599-D66C39B563D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C23F33A2-669C-4955-8EB4-D292D514E24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23F33A2-669C-4955-8EB4-D292D514E24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23F33A2-669C-4955-8EB4-D292D514E24B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C23F33A2-669C-4955-8EB4-D292D514E24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23F33A2-669C-4955-8EB4-D292D514E24B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23F33A2-669C-4955-8EB4-D292D514E24B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A9F8AC37-5596-4DD8-A599-D66C39B563D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F8AC37-5596-4DD8-A599-D66C39B563D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F8AC37-5596-4DD8-A599-D66C39B563D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F8AC37-5596-4DD8-A599-D66C39B563D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {694B6F33-F7CD-4E77-BCE5-9329412B2197}
+	EndGlobalSection
+EndGlobal
