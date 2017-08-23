@@ -8,15 +8,17 @@ using System.Web;
 using System.Web.Mvc;
 using DemoCSOMWeb.Models;
 
+using DemoCSOMWeb.Controllers;
 namespace DemoCSOMWeb.Controllers
 {
     public class PersonasController : Controller
     {
         private DemoCSOMWebContext db = new DemoCSOMWebContext();
-
+        private SharePointController spController = new SharePointController();
         // GET: Personas
         public ActionResult Index()
         {
+            spController.ObtenerElementos(HttpContext);
             return View(db.Personas.ToList());
         }
 
@@ -50,9 +52,10 @@ namespace DemoCSOMWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                spController.InsertarElemento(persona, HttpContext);
                 db.Personas.Add(persona);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", (new { SPHostUrl = SharePointContext.GetSPHostUrl(HttpContext.Request).AbsoluteUri }) );
             }
 
             return View(persona);
@@ -123,5 +126,18 @@ namespace DemoCSOMWeb.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult MigrarSharePoint()
+        {
+
+
+            spController.MigrarDatos(db.Personas.ToList(), HttpContext);
+
+            return RedirectToAction("Index", (new { SPHostUrl = SharePointContext.GetSPHostUrl(HttpContext.Request).AbsoluteUri }));
+        }
+
+
+       
     }
 }
