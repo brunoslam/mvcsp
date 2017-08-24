@@ -52,9 +52,10 @@ namespace DemoCSOMWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                spController.InsertarElemento(persona, HttpContext);
+                
                 db.Personas.Add(persona);
                 db.SaveChanges();
+                spController.InsertarElemento(persona, HttpContext);
                 return RedirectToAction("Index", (new { SPHostUrl = SharePointContext.GetSPHostUrl(HttpContext.Request).AbsoluteUri }) );
             }
 
@@ -133,7 +134,7 @@ namespace DemoCSOMWeb.Controllers
 
 
             spController.MigrarDatos(db.Personas.ToList(), HttpContext);
-
+            TempData["MsjMigracion"] = "Migración realizada correctamente";
             return RedirectToAction("Index", (new { SPHostUrl = SharePointContext.GetSPHostUrl(HttpContext.Request).AbsoluteUri }));
         }
 

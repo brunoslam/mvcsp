@@ -11,13 +11,16 @@ namespace DemoCSOMWeb.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Persona
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Comuna { get; set; }
         public string Direccion { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public Nullable<bool> EsHumano { get; set; }
     }

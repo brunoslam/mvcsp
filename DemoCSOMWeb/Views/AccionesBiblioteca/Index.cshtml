@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Acciones Biblioteca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Acciones Biblioteca</h2>
+
+@Html.ActionLink("Subir archivo", "SubirArchivo", "AccionesBiblioteca") <br />
+@Html.ActionLink("Obtener tamaño total", "ObtenerTamano", "AccionesBiblioteca")
+<hr />
+
+@using (Html.BeginForm("Index", "SubirArchivo"))
+{
+
+    if (@ViewBag.Url != null) {
+    <div>
+        <label>Archivo creado correctamente:</label> <a href="@ViewBag.Url">Abrir archivo</a>
+    </div>
+    }
+
+    if (@ViewBag.TotalSize != null)
+    {
+        <div>
+            <label>Tamaño total biblioteca: <span>@ViewBag.TotalSize</span>kb</label>
+        </div>
+    }
+}

@@ -25,11 +25,16 @@ namespace DemoCSOMWeb.Controllers
                 //var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
 
                 //ClientContext clientContext = new ClientContext(siteUrl);
-                SP.List oList = clientContext.Web.Lists.GetByTitle("Noticias");
+                SP.List oList = clientContext.Web.Lists.GetByTitle("Persona");
 
                 ListItemCreationInformation itemCreateInfo = new ListItemCreationInformation();
                 ListItem oListItem = oList.AddItem(itemCreateInfo);
-                oListItem["Title"] = "My New Item!";
+                oListItem["Title"] = persona.Id;
+                oListItem["Nombre"] = persona.Nombre;
+                oListItem["Comuna"] = persona.Comuna;
+                oListItem["Direccion"] = persona.Direccion;
+                oListItem["FechaNacimiento"] = persona.FechaNacimiento;
+                oListItem["EsHumano"] = persona.EsHumano;
 
                 oListItem.Update();
 
@@ -49,7 +54,7 @@ namespace DemoCSOMWeb.Controllers
             {
                 //var creds = new SharePointOnlineCredentials("user@tenant.onmicrosoft.com", password); // Requires SecureString() for password
                 //context.Credentials = creds;
-                SP.List oList = clientContext.Web.Lists.GetByTitle("Noticias");
+                SP.List oList = clientContext.Web.Lists.GetByTitle("Persona");
 
                 CamlQuery camlQuery = new CamlQuery();
                 camlQuery.ViewXml = "<View><Query><OrderBy><FieldRef Name='Title' Ascending='TRUE'></FieldRef></OrderBy><Where><IsNotNull><FieldRef Name='ID' /></IsNotNull></Where></Query></View>";
@@ -86,11 +91,16 @@ namespace DemoCSOMWeb.Controllers
                     //var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
 
                     //ClientContext clientContext = new ClientContext(siteUrl);
-                    SP.List oList = clientContext.Web.Lists.GetByTitle("Noticias");
+                    SP.List oList = clientContext.Web.Lists.GetByTitle("Persona");
 
                     ListItemCreationInformation itemCreateInfo = new ListItemCreationInformation();
                     ListItem oListItem = oList.AddItem(itemCreateInfo);
                     oListItem["Title"] = persona.Id;
+                    oListItem["Nombre"] = persona.Nombre;
+                    oListItem["Comuna"] = persona.Comuna;
+                    oListItem["Direccion"] = persona.Direccion;
+                    oListItem["FechaNacimiento"] = persona.FechaNacimiento;
+                    oListItem["EsHumano"] = persona.EsHumano;
 
                     oListItem.Update();
 
@@ -109,7 +119,7 @@ namespace DemoCSOMWeb.Controllers
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
 
-                SP.List oList = clientContext.Web.Lists.GetByTitle("Noticias");
+                SP.List oList = clientContext.Web.Lists.GetByTitle("Persona");
                 ListItemCollection listItems = oList.GetItems(CamlQuery.CreateAllItemsQuery());
                 clientContext.Load(listItems,
                                     eachItem => eachItem.Include(

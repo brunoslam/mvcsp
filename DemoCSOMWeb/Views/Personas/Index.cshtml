@@ -5,7 +5,12 @@
 }
 
 <h2>Index</h2>
-
+@if (TempData["MsjMigracion"] != null)
+{
+    <div>
+        @TempData["MsjMigracion"]
+    </div>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
