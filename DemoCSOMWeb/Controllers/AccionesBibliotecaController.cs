@@ -43,7 +43,7 @@ namespace DemoCSOMWeb.Controllers
                 return View("Index");
             }
         }
-        //Comentar a sukis que tiene que hablar sobre limites, storage metrics
+        //Comentar a sukis que tiene que hablar sobre limites, storage metrics, versionamiento
 
         public ActionResult ObtenerTamano()
         {
@@ -54,19 +54,25 @@ namespace DemoCSOMWeb.Controllers
                 Web web = clientContext.Web;
                 List oList = clientContext.Web.Lists.GetByTitle("Documentos");
                 CamlQuery oQuery = new CamlQuery();
-                ListItemCollection collListItem = oList.GetItems(oQuery);
-                clientContext.Load(collListItem);
+
+                FileCollection allFile = oList.RootFolder.Files;
+                clientContext.Load(allFile);
+                
                 clientContext.ExecuteQuery();
-                foreach (ListItem oListItem in collListItem)
+                foreach (File file in allFile)
                 {
-                    if (oListItem["FSObjType"].ToString() == "0")
+                    FileVersionCollection versions = file.Versions;
+                    totalSize += file.Length;
+                    clientContext.Load(versions);
+
+                    clientContext.ExecuteQuery();
+                    foreach (FileVersion fileVersion in versions)
                     {
-                        totalSize += Double.Parse(oListItem["File_x0020_Size"].ToString());
+                        totalSize += fileVersion.Size;
                     }
                 }
-                totalSize = Math.Round(totalSize / 1024, 2);
             }
-            ViewBag.TotalSize = totalSize;
+            ViewBag.TotalSize = Math.Round(totalSize / 1024, 2);
             return View("Index");
         }
     }
