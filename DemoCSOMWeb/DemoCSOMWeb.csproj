@@ -237,6 +237,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccionesBibliotecaController.cs" />
+    <Compile Include="Controllers\AccionesSitioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\SharePointController.cs" />
@@ -329,9 +330,11 @@
     <Content Include="Views\Personas\Index.cshtml" />
     <Content Include="Views\Home\AccionesBiblioteca.cshtml" />
     <Content Include="Views\AccionesBiblioteca\Index.cshtml" />
+    <Content Include="Views\AccionesSitio\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Acciones\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

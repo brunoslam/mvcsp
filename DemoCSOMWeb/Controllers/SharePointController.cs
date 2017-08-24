@@ -15,16 +15,14 @@ namespace DemoCSOMWeb.Controllers
 
         public void InsertarElemento(Persona persona, HttpContextBase HttpContext)
         {
-            string siteUrl = "http://MyServer/sites/MySiteCollection";
-
+            //string siteUrl = "https://latinshare.sharepoint.com/sites/dev/";
+            //ClientContext clientContext = new ClientContext(siteUrl);
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-
+            //var creds = new SharePointOnlineCredentials("user@tenant.onmicrosoft.com", password); // Requires SecureString() for password
+            //context.Credentials = creds;
 
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
-                //var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-
-                //ClientContext clientContext = new ClientContext(siteUrl);
                 SP.List oList = clientContext.Web.Lists.GetByTitle("Persona");
 
                 ListItemCreationInformation itemCreateInfo = new ListItemCreationInformation();
@@ -44,16 +42,9 @@ namespace DemoCSOMWeb.Controllers
         
         public void ObtenerElementos(HttpContextBase HttpContext)
         {
-            //string siteUrl = "https://latinshare.sharepoint.com/sites/dev/";
-
-            //ClientContext clientContext = new ClientContext(siteUrl);
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-
-
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
-                //var creds = new SharePointOnlineCredentials("user@tenant.onmicrosoft.com", password); // Requires SecureString() for password
-                //context.Credentials = creds;
                 SP.List oList = clientContext.Web.Lists.GetByTitle("Persona");
 
                 CamlQuery camlQuery = new CamlQuery();
@@ -61,12 +52,11 @@ namespace DemoCSOMWeb.Controllers
                 ListItemCollection collListItem = oList.GetItems(camlQuery);
 
                 clientContext.Load(collListItem);
-
                 clientContext.ExecuteQuery();
 
                 foreach (ListItem oListItem in collListItem)
                 {
-                    Console.WriteLine("ID: {0} \nTitle: {1} ", oListItem.Id, oListItem["Title"]);
+                    Console.WriteLine("ID BBDD: {0}, Nombre: {1} ", oListItem["Title"], oListItem["Nombre"]);
                 }
             }
         }
@@ -81,11 +71,7 @@ namespace DemoCSOMWeb.Controllers
             LimpiarTabla(HttpContext);
             foreach (Persona persona in ListPersona)
             {
-                string siteUrl = "http://MyServer/sites/MySiteCollection";
-
                 var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-
-
                 using (var clientContext = spContext.CreateUserClientContextForSPHost())
                 {
                     //var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
@@ -105,6 +91,24 @@ namespace DemoCSOMWeb.Controllers
                     oListItem.Update();
 
                     clientContext.ExecuteQuery();
+
+                    if (persona.Id % 2 == 0)
+                    {
+                        oListItem.BreakRoleInheritance(false, false);
+
+                        User spUser = clientContext.Web.CurrentUser;
+                        clientContext.Load(spUser, user => user.LoginName);
+                        clientContext.ExecuteQuery();
+
+                        //spUser.LoginName
+                        User oUser = clientContext.Web.SiteUsers.GetByLoginName("i:0#.f|membership|sleiva@latinshare.com");
+                        RoleDefinitionBindingCollection collRoleDefinitionBinding = new RoleDefinitionBindingCollection(clientContext);
+                        collRoleDefinitionBinding.Add(clientContext.Web.RoleDefinitions.GetByType(RoleType.Reader));
+                        oListItem.RoleAssignments.Add(oUser, collRoleDefinitionBinding);
+                        clientContext.ExecuteQuery();
+                    }
+                    
+
                 }
             }
 
@@ -114,8 +118,6 @@ namespace DemoCSOMWeb.Controllers
         public void LimpiarTabla(HttpContextBase HttpContext)
         {
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-
-
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
 
@@ -133,13 +135,14 @@ namespace DemoCSOMWeb.Controllers
                     {
                         listItems[counter].DeleteObject();
                         clientContext.ExecuteQuery();
-                        Console.WriteLine("Row: " + counter + " Item Deleted");
                     }
                 }
 
             }
 
         }
+
+        
 
 
     }

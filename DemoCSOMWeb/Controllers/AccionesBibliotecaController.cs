@@ -57,7 +57,7 @@ namespace DemoCSOMWeb.Controllers
 
                 FileCollection allFile = oList.RootFolder.Files;
                 clientContext.Load(allFile);
-                
+
                 clientContext.ExecuteQuery();
                 foreach (File file in allFile)
                 {
@@ -74,6 +74,7 @@ namespace DemoCSOMWeb.Controllers
             }
             ViewBag.TotalSize = Math.Round(totalSize / 1024, 2);
             return View("Index");
+
         }
     }
 }
